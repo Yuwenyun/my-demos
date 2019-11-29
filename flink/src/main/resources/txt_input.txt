@@ -1,0 +1,5 @@
+{"advertiserId": 1, "showCnt": 2}
+{"advertiserId": 1, "showCnt": 2}
+{"advertiserId": 2, "showCnt": 9}
+{"advertiserId": 1, "showCnt": 8}
+{"advertiserId": 2, "showCnt": 2}

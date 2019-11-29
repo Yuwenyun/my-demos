@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: test-demo
+  datasource:
+    url: jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;MODE=Mysql
+    username:
+    password:
+    driverClassName: org.h2.Driver
+    schema: classpath:sql/init-table.sql
+    data: classpath:sql/data.sql
+
+mybatis:
+#  config-location: classpath:mybatis-config.xml
+  mapper-locations: classpath:mapper/*.xml

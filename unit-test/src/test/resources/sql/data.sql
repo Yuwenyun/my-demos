@@ -1,0 +1,1 @@
+insert into employee(name, age, birth) values('alice', 20, '1990-10-01 10:00:00');
