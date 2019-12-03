@@ -1,5 +1,8 @@
 package com.yuwenyun.demos.flink;
 
+import com.yuwenyun.demos.flink.cep.CEPMain;
+import com.yuwenyun.demos.flink.streaming.StreamMain;
+import com.yuwenyun.demos.flink.streaming.state.StateMain;
 import java.net.URL;
 import java.util.List;
 import org.apache.flink.streaming.api.datastream.DataStream;
@@ -12,11 +15,21 @@ import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
  */
 public class App {
 
+    private final static String filePath = "/txt_input.txt";
+
     public static void main(String[] args) throws Exception {
+        final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+
+        DataStream<String> source = getDataStreamFromSocket(env, "127.0.0.1", 9999);
+//        CEPMain.attachProcessors(source);
+//        StateMain.attachProcessors(source);
+        StateMain.attachBroadcastProcessors(source, env);
+
+        env.execute();
     }
 
     private static DataStream getDataStreamFromFile(StreamExecutionEnvironment env, String path){
-        URL url = App.class.getResource(path);
+        URL url = CEPMain.class.getResource(path);
         return env.readTextFile("file://" + url.getPath());
     }
 

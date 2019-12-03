@@ -19,13 +19,10 @@ import org.apache.flink.util.Collector;
  */
 public class CEPMain {
 
-    private final static String filePath = "/txt_input.txt";
     private static final ObjectMapper mapper = new ObjectMapper();
 
-    public static void main(String[] args) throws Exception {
-        final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
-
-        DataStream<String> source = getDataStreamFromSocket(env, "127.0.0.1", 9999);
+    // source : {"advertiserId": 1, "showCnt": 2}
+    public static void attachProcessors(DataStream<String> source){
         DataStream<AdvertiserInfo> mappedStream = source.map(
             new MapFunction<String, AdvertiserInfo>() {
                 @Override
@@ -44,20 +41,5 @@ public class CEPMain {
                 }
             }
         }).print();
-
-        env.execute();
-    }
-
-    private static DataStream getDataStreamFromFile(StreamExecutionEnvironment env, String path){
-        URL url = CEPMain.class.getResource(path);
-        return env.readTextFile("file://" + url.getPath());
-    }
-
-    private static DataStream getDataStreamFromElements(StreamExecutionEnvironment env, List<String> list){
-        return env.fromElements(list.toArray());
-    }
-
-    private static DataStream getDataStreamFromSocket(StreamExecutionEnvironment env, String ip, int port){
-        return env.socketTextStream(ip, port);
     }
 }
