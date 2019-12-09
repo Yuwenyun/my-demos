@@ -2,9 +2,11 @@ package com.yuwenyun.demos.flink;
 
 import com.yuwenyun.demos.flink.cep.CEPMain;
 import com.yuwenyun.demos.flink.streaming.StreamMain;
+import com.yuwenyun.demos.flink.streaming.operators.WindowMain;
 import com.yuwenyun.demos.flink.streaming.state.StateMain;
 import java.net.URL;
 import java.util.List;
+import org.apache.flink.streaming.api.TimeCharacteristic;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 
@@ -19,11 +21,15 @@ public class App {
 
     public static void main(String[] args) throws Exception {
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        // 使用window功能时需要设置
+        env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
 
         DataStream<String> source = getDataStreamFromSocket(env, "127.0.0.1", 9999);
 //        CEPMain.attachProcessors(source);
 //        StateMain.attachProcessors(source);
-        StateMain.attachBroadcastProcessors(source, env);
+//        StateMain.attachBroadcastProcessors(source, env);
+//        WindowMain.attachTumblingWindow(source);
+        WindowMain.attachSlidingWindow(source);
 
         env.execute();
     }

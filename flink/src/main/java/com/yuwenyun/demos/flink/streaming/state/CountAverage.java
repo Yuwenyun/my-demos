@@ -50,6 +50,8 @@ public class CountAverage extends RichFlatMapFunction<Tuple2<Integer, Integer>, 
             TypeInformation.of(new TypeHint<Tuple2<Integer, Integer>>() {}),  // state存储数据类型
             Tuple2.of(0, 0)  // state默认值
         );
+        // 让状态可查
+//        descriptor.setQueryable("query-name");
 
         StateTtlConfig ttlConfig = StateTtlConfig
             .newBuilder(Time.seconds(3))

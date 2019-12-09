@@ -1,5 +1,6 @@
 package com.yuwenyun.demos.flink.streaming.state;
 
+import com.yuwenyun.demos.flink.streaming.StringToTupleMap;
 import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.common.state.MapStateDescriptor;
 import org.apache.flink.api.common.typeinfo.BasicTypeInfo;
@@ -25,14 +26,18 @@ public class StateMain {
     );
 
     public static void attachProcessors(DataStream<String> source){
-        source.map(new MapFunction<String, Tuple2<Integer, Integer>>() {
-            @Override
-            public Tuple2<Integer, Integer> map(String s) throws Exception {
-                String[] strings = s.split(" ");
-                return Tuple2.of(Integer.parseInt(strings[0]), Integer.parseInt(strings[1]));
-            }
-        }).keyBy(0).flatMap(new CountAverage()).addSink(new BufferedSink(2));
+        source.map(new StringToTupleMap()).keyBy(0).flatMap(new CountAverage()).addSink(new BufferedSink(2));
     }
+
+//    public static void attachQueryableProcessors(DataStream<String> source){
+//        source.map(new MapFunction<String, Tuple2<Integer, Integer>>() {
+//            @Override
+//            public Tuple2<Integer, Integer> map(String s) throws Exception {
+//                String[] strings = s.split(" ");
+//                return Tuple2.of(Integer.parseInt(strings[0]), Integer.parseInt(strings[1]));
+//            }
+//        }).keyBy(0).asQueryableState("query-name");
+//    }
 
     public static void attachBroadcastProcessors(DataStream<String> source, StreamExecutionEnvironment env){
         // 构建广播流

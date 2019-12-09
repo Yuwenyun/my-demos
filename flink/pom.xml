@@ -39,8 +39,9 @@
       <version>${flink.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-lang3</artifactId>
+      <groupId>org.apache.flink</groupId>
+      <artifactId>flink-queryable-state-client-java</artifactId>
+      <version>${flink.version}</version>
     </dependency>
   </dependencies>
 

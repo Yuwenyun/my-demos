@@ -21,6 +21,7 @@ public class BoundedOutOfOrdernessGenerator implements AssignerWithPeriodicWater
         return new Watermark(currentMaxTimestamp - maxOutOfOrder);
     }
 
+    // 提取的timestamp单位是毫秒
     @Override
     public long extractTimestamp(String element, long previousElementTimestamp) {
         // 从数据中提取timestamp
