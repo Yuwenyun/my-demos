@@ -19,7 +19,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <unit.test.version>4.12</unit.test.version>
+    <unit.test.version>4.13.1</unit.test.version>
   </properties>
 
   <dependencyManagement>
